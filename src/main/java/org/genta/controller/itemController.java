@@ -1,6 +1,8 @@
 package org.genta.controller;
 
 
+import net.sf.jasperreports.engine.JRException;
+import org.genta.services.ExportService;
 import org.genta.services.itemServices;
 
 import javax.inject.Inject;
@@ -17,6 +19,9 @@ public class itemController {
     @Inject
     itemServices itemservices;
 
+    @Inject
+    ExportService exportService;
+
     @GET
     public Response get1(){
         return itemservices.get1();
@@ -27,6 +32,14 @@ public class itemController {
     public Response get2(@PathParam("id") Long id){
         return itemservices.get2(id);
     }
+
+    @GET
+    @Path("/export/pdf")
+    @Produces("application/pdf")
+    public Response exportPDF() throws JRException {
+        return exportService.exportPDF();
+    }
+
     @POST
     public Response post(Map<String, Object> request){
         return itemservices.post(request);
